@@ -1,61 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Three JS</title>
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/three.min.js"></script>
-    <script src="js/TweenMax.min.js"></script>
+    <title>Font Loading Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
 </head>
+
 <body>
+<div id="canvas"></div>
 
-    <script>
-        var rotationIncrementor = 0;
-        var creepIncrementor = -100;
-        var scene = new THREE.Scene();
-
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
-
-
-        var renderer = new THREE.WebGLRenderer({
-            antialias: true
-        });
-        renderer.setClearColor("#e5e5e5");
-        renderer.setSize(window.innerWidth, window.innerHeight);
-
-        document.body.appendChild(renderer.domElement);
-
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-
-            camera.updateProjectionMatrix();
-        })
-
-        var material = new THREE.MeshPhongMaterial({
-            color: 0xdddddd
-        });
-
-        var textGeom = new THREE.TextGeometry( 'Hello World!', {
-            font: 'sinkin sans 700 bold' // Must be lowercase!
-        });
-
-        var textMesh = new THREE.Mesh( textGeom, material );
-
-        scene.add( textMesh );
-
-        var light = new THREE.PointLight(0xFFFFFF, 1, 500);
-        light.position.set(10, 0, 25);
-        scene.add(light);
-
-        var render = function() {
-            requestAnimationFrame(render);
-            renderer.render(scene, camera);
-        }
-
-        render();
-    </script>
-
+<script src="js/three.min.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/janda_manatee_solid_regular.typeface.js"></script>
+<script src="js/font-example.js"></script>
+<script></script>
 </body>
 </html>
