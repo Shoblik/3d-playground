@@ -33,19 +33,17 @@
             camera.updateProjectionMatrix();
         })
 
-        // var geometry = new THREE.BoxGeometry(1, 1, 1);
-        // var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
-        // var mesh = new THREE.Mesh(geometry, material);
+        var material = new THREE.MeshPhongMaterial({
+            color: 0xdddddd
+        });
 
-        // var material = new THREE.MeshPhongMaterial({
-        //     color: 0xdddddd
-        // });
-        // var textGeom = new THREE.TextGeometry( 'Hello World!', {
-        //     font: 'sinkin sans 700 bold' // Must be lowercase!
-        // });
-        // var textMesh = new THREE.Mesh( textGeom, material );
-        //
-        // scene.add( textMesh );
+        var textGeom = new THREE.TextGeometry( 'Hello World!', {
+            font: 'sinkin sans 700 bold' // Must be lowercase!
+        });
+
+        var textMesh = new THREE.Mesh( textGeom, material );
+
+        scene.add( textMesh );
 
         var light = new THREE.PointLight(0xFFFFFF, 1, 500);
         light.position.set(10, 0, 25);
