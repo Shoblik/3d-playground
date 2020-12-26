@@ -3,6 +3,9 @@ var container, scene, camera, renderer, controls, textMesh, pivot, positionX, po
 
 var mouseDown = true;
 
+var count = 0;
+
+var resistance = 100;
 
 $(document).ready(function() {
     $('#canvas').on('touch', function(e) {
@@ -24,18 +27,22 @@ $(document).ready(function() {
         //start the drag function
         canvas.trackDragAndMove(positionX, positionY);
 
-        console.log(positionX + '|' + positionY);
-
         mouseDown = true;
     });
     $('#canvas').on('touchend', function(e) {
         mouseDown = false;
+        canvas.nextXMove = null;
+        canvas.nextYMove = null;
     });
 })
 
 var canvas = {
+    newXMove: null,
+    nextYMove: null,
+
     trackDragAndMove: function(originalX, originalY) {
         $('#canvas').on('touchmove', function(e) {
+            count++;
             let touch = e.originalEvent.touches[0]
             positionX = touch.pageX;
             positionY = touch.pageY;
@@ -46,9 +53,39 @@ var canvas = {
 
             console.log(newX + '|' + newY);
 
-            pivot.rotation.x = newX;
-            pivot.rotation.y = newY;
+            // if (count % resistance === 0) {
+                canvas.nextXMove = newX;
+                canvas.nextYMove = newY;
+            // }
         });
+    },
+
+    move: function() {
+        if (canvas.nextXMove || canvas.nextYMove) {
+            // check to see if there's a difference between where we are now and where we want to be
+            let currentCanvasX = pivot.rotation.x;
+            let currentCanvasY = pivot.rotation.y;
+
+            // if (currentCanvasX !== canvas.nextXMove) {
+            //     if (currentCanvasX < canvas.nextXMove) {
+            //         pivot.rotation.x++;
+            //         canvas.nextXMove++;
+            //     } else {
+            //         pivot.rotation.x--;
+            //         canvas.nextXMove--;
+            //     }
+            // }
+
+            if (currentCanvasY !== canvas.nextYMove) {
+                if (currentCanvasY < canvas.nextYMove) {
+                    pivot.rotation.y++;
+                    canvas.nextYMove++;
+                } else {
+                    pivot.rotation.y--;
+                    canvas.nextYMove--;
+                }
+            }
+        }
     }
 }
 
@@ -125,9 +162,13 @@ function animate() {
 
     render();
 
-    if (!mouseDown) {
-        pivot.rotation.y += 0.005;
-    }
+    // check if we need to move
+
+    canvas.move();
+
+    // if (!mouseDown) {
+    //     pivot.rotation.y += 0.005;
+    // }
 
 }
 
